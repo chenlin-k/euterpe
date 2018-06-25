@@ -274,6 +274,11 @@ public class AppServiceController {
         return json.toString();
     }
 
+    /**
+     * 爬虫的模板调用
+     * @return
+     */
+
     @RequestMapping("/mybatisSeimi")
     public String mybatisSeimi(){
         SeimiConfig config = new SeimiConfig();
