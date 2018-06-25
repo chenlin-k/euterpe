@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.mapper.BillCycleMapper">
+
+    <!-- 开启基于redis的二级缓存 -->
+    <!--<cache type="com.wooyoo.learning.util.RedisCache"/>-->
+
+    <select id="selectByidcard" resultType="BillCycleInfoEntity">
+        SELECT * FROM BillCycleInfoEntity WHERE idCard = #{idCard} ORDER by paymentsDate DESC
+    </select>
+
+    <insert id="insert" parameterType="BillCycleInfoEntity" flushCache="true">
+    INSERT into BillCycleInfoEntity (idCard,subject,senderUrl,receiveAddUrl,payments,creditLine,paymentsDate,creditNumber,infoSource,bankName,sendTime,isSuccess,errorInfo,ErrorContent)
+    VALUES (#{idCard},#{subject},#{senderUrl},#{receiveAddUrl},#{payments},#{creditLine},#{paymentsDate},#{creditNumber},#{infoSource},#{bankName},#{sendTime},#{isSuccess},#{errorInfo},#{ErrorContent})
+    </insert>
+
+    <select id="countByBankOrDate" parameterType="BillCycleInfoEntity" resultType="java.lang.Integer">
+        SELECT count(*) FROM BillCycleInfoEntity WHERE idCard = #{idCard} and bankName=#{bankName} and paymentsDate=#{paymentsDate} and isSuccess=0
+    </select>
+
+    <update id="updateBi" parameterType="BillCycleInfoEntity" flushCache="true">
+        UPDATE  BillCycleInfoEntity
+        <trim prefix="set" suffixOverrides=",">
+            <if test="subject!=null">subject=#{subject},</if>
+            <if test="senderUrl!=null">senderUrl=#{senderUrl},</if>
+            <if test="receiveAddUrl!=null">receiveAddUrl=#{receiveAddUrl},</if>
+            <if test="payments!=null">payments=#{payments},</if>
+            <if test="creditLine!=null">creditLine=#{creditLine},</if>
+            <if test="creditNumber!=null">creditNumber=#{creditNumber},</if>
+            <if test="infoSource!=null">infoSource=#{infoSource},</if>
+            <if test="sendTime!=null">sendTime=#{sendTime},</if>
+            <if test="isSuccess!=null">isSuccess=#{isSuccess},</if>
+            <if test="errorInfo!=null">errorInfo=#{errorInfo},</if>
+            <if test="ErrorContent!=null">ErrorContent=#{ErrorContent},</if>
+        </trim>
+        where idcard=#{idCard} and paymentsDate=#{paymentsDate} AND bankName=#{bankName}
+    </update>
+</mapper>

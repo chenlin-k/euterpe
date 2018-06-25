@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.mapper.MobileOperatorMapper">
+
+    <!-- 开启基于redis的二级缓存 -->
+    <!--<cache type="com.wooyoo.learning.util.RedisCache"/>-->
+
+    <select id="findMobileOperator" resultType="MobileOperatorEntity">
+        SELECT * FROM mobile_operator WHERE id = #{id}
+    </select>
+
+
+    <insert id="insertMobileOperator" parameterType="java.util.List">
+        INSERT into mobile_operator
+         (idcard,phone,cycledate,allfee,custname,custlvl,certnum,remark,def0,def1,def2,def3,def4,mobiletype,iserror,reason,createtime)
+        VALUES
+        <foreach collection ="list" item="me" separator =",">
+            (#{me.idcard},#{me.phone},#{me.cycledate},#{me.allfee},#{me.custname},#{me.custlvl},#{me.certnum},#{me.remark},#{me.def0},#{me.def1},#{me.def2},#{me.def3},#{me.def4},#{me.mobiletype},#{me.iserror},#{me.reason},#{me.createtime})
+        </foreach >
+
+    </insert>
+
+
+    <insert id="save" parameterType="BillCycleInfoEntity" flushCache="true">
+        INSERT into blog (title,content,update_time) values (#{blog.title},#{blog.content},now())
+    </insert>
+
+
+</mapper>
