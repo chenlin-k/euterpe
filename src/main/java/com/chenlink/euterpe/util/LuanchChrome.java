@@ -17,7 +17,7 @@ public class LuanchChrome {
 	public static void main(String[] args) throws Exception {
 		// 电话号码
 		CharSequence phone = "15007007374";
-		System.setProperty("webdriver.chrome.driver", "D:\\geckodriver\\chromedriver.exe");
+		System.setProperty("webdriver.chrome.driver", "G:\\chrome\\chromedriver.exe");
 		// 初始化一个浏览器实例，实例名称叫driver
 		WebDriver driver = new ChromeDriver();
 		// 设置隐性等待时间
@@ -26,7 +26,7 @@ public class LuanchChrome {
 		// driver.manage().window().maximize();
 
 		// 打开一个站点
-		driver.get("https://login.10086.cn/login.html?channelID=12003");
+		driver.get("https://live.kuaishou.com/cate/DQRM/");
 		// 获取当前页面title的值
 		System.out.println("当前打开页面的标题是： " + driver.getTitle());
 		Thread.sleep(2000);
